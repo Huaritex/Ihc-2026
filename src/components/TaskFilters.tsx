@@ -1,9 +1,7 @@
 import { useState } from 'react'
-import { tasks, type TaskStatus } from '../data/tasks'
+import { tasks } from '../data/tasks'
 import TaskCard from './TaskCard'
 import Icon from './Icon'
-
-const statuses: TaskStatus[] = ['Pendiente', 'En progreso', 'Finalizada']
 
 function normalize(value: string) {
   return value
@@ -14,95 +12,49 @@ function normalize(value: string) {
 }
 
 function TaskFilters() {
-  const [subjectQuery, setSubjectQuery] = useState('')
-  const [teacherQuery, setTeacherQuery] = useState('')
-  const [statusFilter, setStatusFilter] = useState('')
+  const [query, setQuery] = useState('')
+  const searchTerms = normalize(query).split(/\s+/).filter(Boolean)
 
   const filteredTasks = tasks.filter((task) => {
-    const matchesSubject = normalize(task.materia).includes(normalize(subjectQuery))
-    const matchesTeacher = normalize(task.docente).includes(normalize(teacherQuery))
-    const matchesStatus = statusFilter === '' || task.estado === statusFilter
+    const searchableText = normalize(
+      [task.materia, task.docente, task.estado, task.fecha].join(' '),
+    )
 
-    return matchesSubject && matchesTeacher && matchesStatus
+    return searchTerms.every((term) => searchableText.includes(term))
   })
 
-  function clearFilters() {
-    setSubjectQuery('')
-    setTeacherQuery('')
-    setStatusFilter('')
+  function clearSearch() {
+    setQuery('')
   }
 
   return (
     <>
-      <section aria-labelledby="filter-heading" className="filter-panel">
-        <div className="filter-heading">
-          <div className="filter-title">
-            <Icon name="filter" />
-            <h2 id="filter-heading">Filtrar tareas</h2>
-          </div>
-          <p>Busca por materia, docente o estado.</p>
+      <section aria-label="Filtrar tareas" className="filter-panel">
+        <div className="field-control">
+          <Icon name="search" />
+          <input
+            id="task-search"
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Buscar tareas..."
+            aria-label="Buscar tareas por materia, docente, estado o fecha"
+          />
         </div>
-        <div className="filter-fields">
-          <label className="filter-field">
-            <span>Materia</span>
-            <div className="field-control">
-              <Icon name="search" />
-              <input
-                type="search"
-                value={subjectQuery}
-                onChange={(event) => setSubjectQuery(event.target.value)}
-                placeholder="Buscar por materia..."
-              />
-            </div>
-          </label>
-
-          <label className="filter-field">
-            <span>Docente</span>
-            <div className="field-control">
-              <Icon name="search" />
-              <input
-                type="search"
-                value={teacherQuery}
-                onChange={(event) => setTeacherQuery(event.target.value)}
-                placeholder="Buscar por docente..."
-              />
-            </div>
-          </label>
-
-          <label className="filter-field">
-            <span>Estado</span>
-            <div className="field-control select-control">
-              <select
-                value={statusFilter}
-                onChange={(event) => setStatusFilter(event.target.value)}
-              >
-                <option value="">Todos los estados</option>
-                {statuses.map((status) => (
-                  <option key={status} value={status}>
-                    {status}
-                  </option>
-                ))}
-              </select>
-              <Icon name="chevron" />
-            </div>
-          </label>
-        </div>
-      </section>
-
-      <div className="results-toolbar">
-        <p className="results-count" role="status" aria-atomic="true">
-          <span>{filteredTasks.length}</span> {filteredTasks.length === 1 ? 'actividad encontrada' : 'actividades encontradas'}
-        </p>
         <button
           type="button"
-          onClick={clearFilters}
-          disabled={!subjectQuery && !teacherQuery && !statusFilter}
+          onClick={clearSearch}
+          disabled={!query}
           className="clear-button"
         >
           <Icon name="reset" />
-          Limpiar filtros
+          Limpiar
         </button>
-      </div>
+      </section>
+
+      <p className="results-count" role="status" aria-atomic="true">
+        <span>{filteredTasks.length}</span> {filteredTasks.length === 1 ? 'actividad encontrada' : 'actividades encontradas'}
+      </p>
 
       {filteredTasks.length > 0 ? (
         <div className="task-grid">
@@ -114,8 +66,7 @@ function TaskFilters() {
         <div className="empty-state">
           <div className="empty-icon"><Icon name="search" /></div>
           <h2>No se encontraron tareas</h2>
-          <p>Prueba con otros términos o limpia los filtros.</p>
-          <button type="button" className="clear-button" onClick={clearFilters}>Limpiar filtros</button>
+          <p>Prueba con otros términos o limpia la búsqueda.</p>
         </div>
       )}
     </>

@@ -124,55 +124,20 @@ button:focus-visible {
 }
 
 .filter-panel {
-  padding: 26px 28px 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
   background: var(--panel);
   color: var(--panel-text);
   border-radius: 18px;
 }
-.filter-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-  margin-bottom: 24px;
-}
-.filter-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.filter-title .icon {
-  color: var(--focus);
-}
-.filter-title h2 {
-  margin: 0;
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -.015em;
-}
-.filter-heading p {
-  margin: 0;
-  font-size: 13px;
-  color: var(--panel-muted);
-  line-height: 1.5;
-}
-.filter-fields {
-  display: grid;
-  grid-template-columns: 1fr 1fr .85fr;
-  gap: 20px;
-}
-.filter-field {
-  display: block;
+.filter-panel .field-control {
+  flex: 1;
   min-width: 0;
 }
-.filter-field > span {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 13px;
-  font-weight: 600;
-}
 .field-control {
+  display: block;
   position: relative;
   color: var(--muted);
 }
@@ -185,7 +150,7 @@ button:focus-visible {
   width: 18px;
   height: 18px;
 }
-.field-control input, .field-control select {
+.field-control input {
   display: block;
   width: 100%;
   min-height: 48px;
@@ -203,37 +168,19 @@ button:focus-visible {
   color: var(--muted);
   opacity: 1;
 }
-.field-control input:hover, .field-control select:hover {
+.field-control input:hover {
   border-color: var(--focus);
 }
-.field-control input:focus, .field-control select:focus {
+.field-control input:focus {
   border-color: var(--focus);
   box-shadow: 0 0 0 3px var(--focus);
 }
-.select-control select {
-  appearance: none;
-  padding-left: 14px;
-  padding-right: 42px;
-  cursor: pointer;
-}
-.select-control > .icon {
-  left: auto;
-  right: 14px;
-}
 
-.results-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-  margin-block: 24px 18px;
-}
 .results-count {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 0;
+  margin: 24px 0 18px;
   font-size: 14px;
   color: var(--muted);
 }
@@ -253,7 +200,8 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 44px;
+  min-height: 48px;
+  flex-shrink: 0;
   padding: 10px 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -277,6 +225,13 @@ button:focus-visible {
   color: var(--muted);
   border-color: transparent;
   cursor: default;
+}
+.filter-panel .clear-button:disabled {
+  color: var(--panel-muted);
+  border-color: var(--panel-muted);
+}
+.filter-panel .clear-button:focus-visible {
+  outline-color: var(--focus);
 }
 
 .task-grid {
@@ -394,86 +349,68 @@ button:focus-visible {
   font-weight: 600;
 }
 .empty-state p {
-  margin: 8px 0 20px;
+  margin: 8px 0 0;
   font-size: 14px;
   line-height: 1.6;
   color: var(--muted);
 }
 
 @media (max-width: 960px) {
-  .filter-fields {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-  .filter-field:last-child {
-  grid-column: 1 / -1;
-}
   .task-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 600px) {
   .header-content, .workspace {
-  width: calc(100% - 32px);
-}
+    width: calc(100% - 32px);
+  }
   .header-content {
-  padding-block: 16px;
-}
+    padding-block: 16px;
+  }
   .brand-title {
-  font-size: 16px;
-}
+    font-size: 16px;
+  }
   .workspace {
-  padding-block: 30px 40px;
-}
+    padding-block: 30px 40px;
+  }
   .page-heading {
-  margin-bottom: 24px;
-}
+    margin-bottom: 24px;
+  }
   .page-heading p {
-  font-size: 14px;
-}
+    font-size: 14px;
+  }
   .filter-panel {
-  padding: 22px 18px;
-  border-radius: 14px;
-}
-  .filter-heading {
-  align-items: flex-start;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-  .filter-fields, .task-grid {
-  grid-template-columns: minmax(0, 1fr);
-}
-  .filter-fields {
-  gap: 16px;
-}
-  .filter-field:last-child {
-  grid-column: auto;
-}
-  .field-control input, .field-control select {
-  font-size: 16px;
-}
-  .results-toolbar {
-  margin-block: 18px 14px;
-}
+    padding: 14px;
+    gap: 10px;
+    border-radius: 14px;
+  }
+  .task-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .field-control input {
+    font-size: 16px;
+  }
   .results-count {
-  font-size: 13px;
-}
+    margin-block: 18px 14px;
+    font-size: 13px;
+  }
   .task-card {
-  padding: 22px;
-}
+    padding: 22px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
-  transition: none !important;
-}
+    transition: none !important;
+  }
 }
 
 @media (forced-colors: active) {
   .status-dot {
-  background: CanvasText;
-}
-  .field-control input:focus, .field-control select:focus {
-  outline: 2px solid Highlight;
-}
+    background: CanvasText;
+  }
+  .field-control input:focus {
+    outline: 2px solid Highlight;
+  }
 }
