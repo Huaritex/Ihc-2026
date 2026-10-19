@@ -1,22 +1,21 @@
 import TaskFilters from './components/TaskFilters'
+import Header from './components/Header'
 
 function App() {
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-8 text-slate-800 sm:px-6 sm:py-12 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl">
+    <>
+      <Header />
+      <main className="workspace">
         <section aria-labelledby="tasks-heading">
-          <div className="mb-6 flex flex-col gap-2 sm:mb-8 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h1 id="tasks-heading" className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-                Mis tareas
-              </h1>
-            </div>
+          <div className="page-heading">
+            <h1 id="tasks-heading">Mis tareas</h1>
+            <p>Encuentra tus actividades y mantén tus entregas en orden.</p>
           </div>
 
           <TaskFilters />
         </section>
-      </div>
-    </main>
+      </main>
+    </>
   )
 }
 
