@@ -1,47 +1,22 @@
-import Header from './components/Header'
-import TaskCard from './components/TaskCard'
-import './App.css'
-
-const tareas = [
-  {
-    id: 1,
-    materia: 'IHC',
-    docente: 'Bryana Ojopi',
-    fecha: '15/10/2026',
-    estado: 'En progreso',
-  },
-  {
-    id: 2,
-    materia: 'Calculo II',
-    docente: 'Carlos Mendoza',
-    fecha: '20/10/2026',
-    estado: 'Pendiente',
-  },
-  {
-    id: 3,
-    materia: 'Programacion Orientada a Objetos',
-    docente: 'Lucia Fernandez',
-    fecha: '24/10/2026',
-    estado: 'Finalizada',
-  },
-]
+import TaskFilters from './components/TaskFilters'
 
 function App() {
   return (
-    <div className="app-shell">
-      <Header />
+    <main className="min-h-screen bg-slate-50 px-4 py-8 text-slate-800 sm:px-6 sm:py-12 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <section aria-labelledby="tasks-heading">
+          <div className="mb-6 flex flex-col gap-2 sm:mb-8 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h1 id="tasks-heading" className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                Mis tareas
+              </h1>
+            </div>
+          </div>
 
-      {/* Task Seccion */}
-      <main className="task-section">
-        <h2>Mis tareas</h2>
-        <div className="task-list">
-          {tareas.map((tarea) => (
-            <TaskCard key={tarea.id} {...tarea} />
-          ))}
-        </div>
-      </main>
-
-    </div>
+          <TaskFilters />
+        </section>
+      </div>
+    </main>
   )
 }
 
